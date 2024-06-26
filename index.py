@@ -4,17 +4,17 @@ import pygame
 import sys
 
 class TlouIa:
-    def __init__(self, size=10, num_holes=8, num_supplies=5, num_obstacles=3):
+    def __init__(self, size=5, num_zombies=8, num_supplies=5, num_obstacles=5):
         self.size = size
         self.grid = np.zeros((size, size), dtype=int)
         self.start_state = (0, 0)
         self.goal_state = (size-1, size-1)
-        self.hole_states = self._place_random_items(num_holes)
-        self.supply_states = self._place_random_items(num_supplies, exclude=self.hole_states)
-        self.obstacle_states = self._place_random_items(num_obstacles, exclude=self.hole_states + self.supply_states)
+        self.zombie_states = self._place_random_items(num_zombies)
+        self.supply_states = self._place_random_items(num_supplies, exclude=self.zombie_states)
+        self.obstacle_states = self._place_random_items(num_obstacles, exclude=self.zombie_states + self.supply_states)
         self.supplies_collected = set()
         
-        for i, j in self.hole_states:
+        for i, j in self.zombie_states:
             self.grid[i][j] = 1
         for i, j in self.supply_states:
             self.grid[i][j] = 2
@@ -57,7 +57,7 @@ class TlouIa:
             else:
                 reward = -1
                 done = False
-        elif self.current_state in self.hole_states:
+        elif self.current_state in self.zombie_states:
             reward = -5 
             done = True
         elif self.current_state in self.supply_states and self.current_state not in self.supplies_collected:
@@ -109,7 +109,7 @@ images = {
     "background": pygame.transform.scale(pygame.image.load("grass.png"), (cell_size, cell_size))
 }
 
-env = TlouIa(size=10, num_holes=8, num_supplies=5, num_obstacles=3)
+env = TlouIa(size=10, num_zombies=8, num_supplies=5, num_obstacles=3)
 
 q_table = np.zeros((env.size, env.size, 2 ** len(env.supply_states), 4))  
 
