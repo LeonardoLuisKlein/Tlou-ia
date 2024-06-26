@@ -98,7 +98,7 @@ class TlouIa:
 pygame.init()
 cell_size = 60
 screen = pygame.display.set_mode((10 * cell_size, 10 * cell_size))
-pygame.display.set_caption('TlouIa')
+pygame.display.set_caption('The Last Of Us - IA')
 
 images = {
     "agent": pygame.transform.scale(pygame.image.load("agent.png"), (cell_size, cell_size)),
