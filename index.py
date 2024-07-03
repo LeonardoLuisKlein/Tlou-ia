@@ -4,7 +4,6 @@ import pygame
 import sys
 import pickle
 import tkinter as tk
-from tkinter import messagebox
 
 class TlouIa:
     def __init__(self, size=10):
@@ -12,12 +11,12 @@ class TlouIa:
         self.grid = np.zeros((size, size), dtype=int)
         self.start_state = (0, 0)
         self.goal_state = (size-1, size-1)
-        self.hole_states = [(1, 1), (2, 3), (4, 4), (6, 7), (8, 2), (9, 8), (3, 6), (5, 5)]
+        self.zombie_states = [(1, 1), (2, 3), (4, 4), (6, 7), (8, 2), (9, 8), (3, 6), (5, 5)]
         self.supply_states = [(0, 2), (1, 8), (3, 3), (7, 1), (8, 6)]
         self.obstacle_states = [(2, 2), (4, 7), (6, 3)]
         self.supplies_collected = set()
         
-        for i, j in self.hole_states:
+        for i, j in self.zombie_states:
             self.grid[i][j] = 1
         for i, j in self.supply_states:
             self.grid[i][j] = 2
@@ -52,7 +51,7 @@ class TlouIa:
             else:
                 reward = -1
                 done = False
-        elif self.current_state in self.hole_states:
+        elif self.current_state in self.zombie_states:
             reward = -5
             done = True
         elif self.current_state in self.supply_states and self.current_state not in self.supplies_collected:
