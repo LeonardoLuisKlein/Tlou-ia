@@ -11,9 +11,9 @@ class TlouIa:
         self.grid = np.zeros((size, size), dtype=int)
         self.start_state = (0, 0)
         self.goal_state = (size-1, size-1)
-        self.zombie_states = [(1, 1), (2, 3), (4, 4), (6, 7), (8, 2), (9, 8), (3, 6), (5, 5)]
+        self.zombie_states = [(1, 1), (2, 3), (4, 4), (6, 7), (8, 2), (9, 8), (3, 6), (5, 5), (7, 9)]
         self.supply_states = [(0, 2), (1, 8), (3, 3), (7, 1), (8, 6)]
-        self.obstacle_states = [(2, 2), (4, 7), (6, 3)]
+        self.obstacle_states = [(2, 2), (4, 7), (6, 3), (6, 4), (5, 9)]
         self.supplies_collected = set()
         
         for i, j in self.zombie_states:
@@ -190,10 +190,10 @@ def main():
     window = tk.Tk()
     window.title("Escolha o Modo")
 
-    tk.Label(window, text="Escolha o modo:").pack(pady=10)
+    tk.Label(window, text="Escolha o modo:").pack(pady=20)
 
-    tk.Button(window, text="Treinar", command=on_train).pack(pady=5)
-    tk.Button(window, text="Jogar", command=on_play).pack(pady=5)
+    tk.Button(window, text="Treinar", command=on_train).pack(pady=10)
+    tk.Button(window, text="Jogar", command=on_play).pack(pady=10)
 
     window.mainloop()
 
